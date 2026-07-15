@@ -306,7 +306,7 @@ Roles / members land in **C22**, not day one.
 | C01     | done    | Next.js scaffold in repo root |
 | C02     | done    | Prettier + folders + README   |
 | C03     | done    | shadcn button/card/input      |
-| C04     | pending | needs Neon `DATABASE_URL`     |
+| C04     | done    | Prisma 7 + Docker Postgres    |
 | C05     | pending | needs Clerk keys              |
 | C06–C30 | pending |                               |
 

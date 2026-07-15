@@ -32,6 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# Prisma generated client (regenerate with `pnpm db:generate`)
+/src/generated/prisma
 
 # vercel
 .vercel
@@ -44,3 +48,5 @@ next-env.d.ts
 .idea
 .vscode
 
+
+/src/generated/prisma

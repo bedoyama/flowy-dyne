@@ -11,26 +11,35 @@ This repo is built **commit by commit**. See:
 
 - Node.js 20+
 - pnpm
-- (later) Neon Postgres URL and Clerk keys
+- Docker (for local Postgres) **or** any Postgres `DATABASE_URL`
+- (later) Clerk keys for C05
 
 ## Setup
 
 ```bash
 pnpm install
+cp .env.example .env
+pnpm db:up          # starts local Postgres on port 5434
+pnpm db:migrate     # applies Prisma migrations
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). The home page runs a small DB smoke query.
 
 ## Scripts
 
-| Command       | Purpose               |
-| ------------- | --------------------- |
-| `pnpm dev`    | Dev server            |
-| `pnpm build`  | Production build      |
-| `pnpm start`  | Run production server |
-| `pnpm lint`   | ESLint                |
-| `pnpm format` | Format with Prettier  |
+| Command            | Purpose                                   |
+| ------------------ | ----------------------------------------- |
+| `pnpm dev`         | Dev server                                |
+| `pnpm build`       | Generate Prisma client + production build |
+| `pnpm start`       | Run production server                     |
+| `pnpm lint`        | ESLint                                    |
+| `pnpm format`      | Format with Prettier                      |
+| `pnpm db:up`       | Start local Postgres (`docker compose`)   |
+| `pnpm db:down`     | Stop local Postgres                       |
+| `pnpm db:migrate`  | `prisma migrate dev`                      |
+| `pnpm db:generate` | `prisma generate`                         |
+| `pnpm db:studio`   | Prisma Studio                             |
 
 ## Project layout
 
@@ -43,6 +52,10 @@ src/
   hooks/               # shared hooks
   lib/                 # db, auth helpers, utils
   types/               # shared types
+  generated/prisma/    # Prisma Client (generated, gitignored)
+prisma/
+  schema.prisma
+  migrations/
 docs/
   ROADMAP.md           # commit-sized implementation plan
 ```
@@ -51,7 +64,8 @@ docs/
 
 - **C01–C02** Scaffold + Prettier + folder structure
 - **C03** shadcn/ui (`button`, `card`, `input`)
-- Next: **C04** Prisma + PostgreSQL (needs `DATABASE_URL`)
+- **C04** Prisma + PostgreSQL (Docker on `:5434`)
+- Next: **C05** Clerk auth
 
 ## License
 

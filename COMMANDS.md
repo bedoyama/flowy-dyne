@@ -121,29 +121,76 @@ git commit -m "chore: ignore IDE config (.idea)"
 
 ---
 
+## C04 — Prisma + PostgreSQL
+
+```bash
+# Dependencies (Prisma 7 + Postgres driver adapter)
+pnpm add @prisma/client @prisma/adapter-pg pg dotenv
+pnpm add -D prisma @types/pg tsx
+
+# Allow Prisma engine postinstall scripts (pnpm)
+# package.json → pnpm.onlyBuiltDependencies: ["@prisma/engines", "prisma", "esbuild"]
+pnpm rebuild prisma @prisma/engines
+
+# Scaffold Prisma (creates prisma/schema.prisma, prisma.config.ts, .env)
+pnpm exec prisma init \
+  --datasource-provider postgresql \
+  --output ../src/generated/prisma
+
+# Local Postgres (dedicated container; port 5434 to avoid clashes)
+# docker-compose.yml was added by hand; then:
+docker compose up -d
+# or: pnpm db:up
+
+# Point .env at local DB (also mirrored in .env.example)
+# DATABASE_URL="postgresql://flowy:flowy@localhost:5434/flowy?schema=public"
+
+# After editing prisma/schema.prisma with User / Project / Task models:
+pnpm exec prisma migrate dev --name init
+pnpm exec prisma generate
+
+# Verify
+pnpm lint
+pnpm build
+```
+
+Files added/edited by hand in this step:
+
+- `prisma/schema.prisma` — domain models
+- `src/lib/db.ts` — Prisma client singleton + `@prisma/adapter-pg`
+- `docker-compose.yml` — local Postgres
+- `.env.example` — documented connection string
+- `src/app/page.tsx` — Server Component DB smoke test
+- `package.json` scripts: `db:*`, `postinstall`, `build` runs `prisma generate`
+
+**Git commit:** `feat(db): prisma schema, client, and local postgres (C04)`
+
+---
+
 ## Upcoming (fill in as we go)
-
-### C04 — Prisma + PostgreSQL
-
-*(pending — will document `pnpm add`, `prisma init`, migrate, etc.)*
 
 ### C05 — Clerk auth
 
-*(pending)*
+_(pending)_
 
 ### C06 — App shell
 
-*(pending)*
+_(pending)_
 
 ---
 
 ## Handy always-available scripts
 
-| Command | Purpose |
-|---------|---------|
-| `pnpm dev` | Dev server |
-| `pnpm build` | Production build |
-| `pnpm start` | Run production server |
-| `pnpm lint` | ESLint |
-| `pnpm format` | Prettier write |
-| `pnpm format:check` | Prettier check |
+| Command             | Purpose                              |
+| ------------------- | ------------------------------------ |
+| `pnpm dev`          | Dev server                           |
+| `pnpm build`        | `prisma generate` + production build |
+| `pnpm start`        | Run production server                |
+| `pnpm lint`         | ESLint                               |
+| `pnpm format`       | Prettier write                       |
+| `pnpm format:check` | Prettier check                       |
+| `pnpm db:up`        | `docker compose up -d`               |
+| `pnpm db:down`      | `docker compose down`                |
+| `pnpm db:migrate`   | `prisma migrate dev`                 |
+| `pnpm db:generate`  | `prisma generate`                    |
+| `pnpm db:studio`    | Prisma Studio                        |
