@@ -46,9 +46,9 @@ docs/
 
 ## Current progress
 
-- **C01** Scaffold Next.js + TypeScript + Tailwind
-- **C02** Prettier, ESLint/Prettier harmony, folder structure
-- Next: **C03** shadcn/ui
+- **C01–C02** Scaffold + Prettier + folder structure
+- **C03** shadcn/ui (`button`, `card`, `input`)
+- Next: **C04** Prisma + PostgreSQL (needs `DATABASE_URL`)
 
 ## License
 
