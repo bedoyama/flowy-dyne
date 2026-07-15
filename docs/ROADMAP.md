@@ -2,6 +2,8 @@
 
 Build the MVP in **small, reviewable commits**. Each commit should teach one concept and leave the app runnable.
 
+Shell commands for each step are logged in [`COMMANDS.md`](../COMMANDS.md) (kept in sync as commits land).
+
 **Stack defaults** (change only if you have a strong preference):
 
 | Concern     | Choice                                        | Why                          |

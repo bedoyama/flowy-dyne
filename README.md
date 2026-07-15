@@ -2,7 +2,10 @@
 
 Project and task management MVP built with Next.js (App Router), TypeScript, Tailwind, Prisma, and Clerk.
 
-This repo is built **commit by commit**. See [`docs/ROADMAP.md`](./docs/ROADMAP.md) for the phased plan (C01–C30).
+This repo is built **commit by commit**. See:
+
+- [`docs/ROADMAP.md`](./docs/ROADMAP.md) — phased plan (C01–C30)
+- [`COMMANDS.md`](./COMMANDS.md) — shell commands used per commit (reproduce each step)
 
 ## Prerequisites
 
